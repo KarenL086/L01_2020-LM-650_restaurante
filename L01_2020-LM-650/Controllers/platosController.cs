@@ -89,5 +89,20 @@ namespace L01_2020_LM_650.Controllers
 
             return Ok(plato);
         }
+
+        //Filtado precios
+        [HttpGet]
+        [Route("Filtro/{costo}")]
+        public IActionResult FiltrarPrecios(decimal costo)
+        {
+            platos? plato = (from e in _restauranteContext.platos
+                               where e.precio < costo
+                               select e).FirstOrDefault();
+            if (plato == null)
+            {
+                return NotFound();
+            }
+            return Ok(plato);
+        }
     }
 }
