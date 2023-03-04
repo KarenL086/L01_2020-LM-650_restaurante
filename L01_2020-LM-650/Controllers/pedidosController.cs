@@ -77,19 +77,19 @@ namespace L01_2020_LM_650.Controllers
         [Route("Eliminar/{id}")]
         public IActionResult ElimiarPedido(int id)
         {
-            pedidos? equipo = (from e in _restauranteContext.pedidos
+            pedidos? pedido = (from e in _restauranteContext.pedidos
                                where e.pedidoId == id
                                select e).FirstOrDefault();
-            if (equipo == null)
+            if (pedido == null)
             {
                 return NotFound();
             }
 
-            _restauranteContext.pedidos.Attach(equipo);
-            _restauranteContext.pedidos.Remove(equipo);
+            _restauranteContext.pedidos.Attach(pedido);
+            _restauranteContext.pedidos.Remove(pedido);
             _restauranteContext.SaveChanges();
 
-            return Ok(equipo);
+            return Ok(pedido);
         }
 
         //Filtrado motorista

@@ -50,45 +50,44 @@ namespace L01_2020_LM_650.Controllers
         //Modificar registros
         [HttpPut]
         [Route("Modificar/{id}")]
-        public IActionResult ModificarPedido(int id, [FromBody] pedidos pedidoModificar)
+        public IActionResult ModificarPlato(int id, [FromBody] platos pModificar)
         {
-            pedidos? pedidoActual = (from e in _restauranteContext.pedidos
-                                     where e.pedidoId == id
+            platos? pActual = (from e in _restauranteContext.platos
+                                     where e.platoId == id
                                      select e).FirstOrDefault();
-            if (pedidoActual == null)
+            if (pActual == null)
             {
                 return NotFound();
             }
-            pedidoActual.motoristaId = pedidoModificar.motoristaId;
-            pedidoActual.clienteId = pedidoModificar.clienteId;
-            pedidoActual.platoId = pedidoModificar.platoId;
-            pedidoActual.cantidad = pedidoModificar.cantidad;
-            pedidoActual.precio = pedidoModificar.precio;
+            pActual.nombrePlato = pModificar.nombrePlato;
+            pActual.precio = pModificar.precio;
+            
+           
 
-            _restauranteContext.Entry(pedidoActual).State = EntityState.Modified;
+            _restauranteContext.Entry(pActual).State = EntityState.Modified;
             _restauranteContext.SaveChanges();
 
-            return Ok(pedidoActual);
+            return Ok(pActual);
         }
 
         //Eliminar registros
         [HttpDelete]
         [Route("Eliminar/{id}")]
-        public IActionResult ElimiarPedido(int id)
+        public IActionResult ElimiarPlato(int id)
         {
-            pedidos? equipo = (from e in _restauranteContext.pedidos
-                               where e.pedidoId == id
+            platos? plato = (from e in _restauranteContext.platos
+                               where e.platoId == id
                                select e).FirstOrDefault();
-            if (equipo == null)
+            if (plato == null)
             {
                 return NotFound();
             }
 
-            _restauranteContext.pedidos.Attach(equipo);
-            _restauranteContext.pedidos.Remove(equipo);
+            _restauranteContext.platos.Attach(plato);
+            _restauranteContext.platos.Remove(plato);
             _restauranteContext.SaveChanges();
 
-            return Ok(equipo);
+            return Ok(plato);
         }
     }
 }
